@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Make.Migrations
 {
     [DbContext(typeof(MakeContext))]
-    [Migration("20190808182917_teste")]
-    partial class teste
+    [Migration("20190812205750_dsjfsdjfsjdf")]
+    partial class dsjfsdjfsjdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,64 +23,74 @@ namespace Make.Migrations
 
             modelBuilder.Entity("Make.Models.Comentario", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ComentarioId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Artista");
 
+                    b.Property<DateTime>("DataComentario");
+
                     b.Property<string>("Descricao");
 
                     b.Property<string>("Nome");
 
-                    b.Property<DateTime>("dataComentario");
+                    b.Property<string>("Titulo");
 
-                    b.Property<int?>("mensagemID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("mensagemID");
+                    b.HasKey("ComentarioId");
 
                     b.ToTable("Comentario");
                 });
 
+            modelBuilder.Entity("Make.Models.Mensagem", b =>
+                {
+                    b.Property<int>("MensagemId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ComentarioId");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<string>("Descricao");
+
+                    b.Property<int>("RimelId");
+
+                    b.Property<string>("Titulo");
+
+                    b.HasKey("MensagemId");
+
+                    b.HasIndex("ComentarioId");
+
+                    b.HasIndex("RimelId");
+
+                    b.ToTable("Mensagem");
+                });
+
             modelBuilder.Entity("Make.Models.Rimel", b =>
                 {
-                    b.Property<int>("RimelID")
+                    b.Property<int>("RimelId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Descricao");
 
-                    b.HasKey("RimelID");
+                    b.HasKey("RimelId");
 
                     b.ToTable("Rimel");
                 });
 
-            modelBuilder.Entity("Make.Models.mensagem", b =>
+            modelBuilder.Entity("Make.Models.Mensagem", b =>
                 {
-                    b.Property<int>("mensagemId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasOne("Make.Models.Comentario", "Comentarios")
+                        .WithMany("Mensagem")
+                        .HasForeignKey("ComentarioId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<string>("Categoria");
-
-                    b.Property<string>("Descricao");
-
-                    b.Property<string>("Titulo");
-
-                    b.Property<DateTime>("data");
-
-                    b.HasKey("mensagemId");
-
-                    b.ToTable("mensagem");
-                });
-
-            modelBuilder.Entity("Make.Models.Comentario", b =>
-                {
-                    b.HasOne("Make.Models.mensagem", "mensagem")
-                        .WithMany()
-                        .HasForeignKey("mensagemID");
+                    b.HasOne("Make.Models.Rimel", "Rimel")
+                        .WithMany("Mensagens")
+                        .HasForeignKey("RimelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -33,7 +33,7 @@ namespace Make.Controllers
             }
 
             var rimel = await _context.Rimel
-                .FirstOrDefaultAsync(m => m.RimelID == id);
+                .FirstOrDefaultAsync(m => m.RimelId == id);
             if (rimel == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace Make.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RimelID,Descricao")] Rimel rimel)
+        public async Task<IActionResult> Create([Bind("RimelId,Descricao")] Rimel rimel)
         {
             if (ModelState.IsValid)
             {
@@ -85,9 +85,9 @@ namespace Make.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RimelID,Descricao")] Rimel rimel)
+        public async Task<IActionResult> Edit(int id, [Bind("RimelId,Descricao")] Rimel rimel)
         {
-            if (id != rimel.RimelID)
+            if (id != rimel.RimelId)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace Make.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RimelExists(rimel.RimelID))
+                    if (!RimelExists(rimel.RimelId))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace Make.Controllers
             }
 
             var rimel = await _context.Rimel
-                .FirstOrDefaultAsync(m => m.RimelID == id);
+                .FirstOrDefaultAsync(m => m.RimelId == id);
             if (rimel == null)
             {
                 return NotFound();
@@ -146,7 +146,7 @@ namespace Make.Controllers
 
         private bool RimelExists(int id)
         {
-            return _context.Rimel.Any(e => e.RimelID == id);
+            return _context.Rimel.Any(e => e.RimelId == id);
         }
     }
 }

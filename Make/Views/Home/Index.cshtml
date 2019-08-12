@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Make.Models.Comentario
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,61 +8,90 @@
     <p>Olha oque eu preparei pra vocÊ s2  ..<a href="https://www.pausaparafeminices.com/tag/make/">Pausa para sua feminice </a>.</p>
 </div>
 
-<img src="~/img/ana.png"class="rounded mx-auto d-block" alt="~/img/ana.png">
+<img src="~/img/ana.png" class="rounded mx-auto d-block" alt="~/img/ana.png">
 
 <h1>Hellow Girls</h1>
+<p>
+    Você que está começando a aprender sobre o “fantástico mundo da maquiagem”, chega até ficar perdida de tantos modelos de pincéis que existem? Respira e fica calma, a Curvex vai te ajudar nessa missão de encontrar pincéis de maquiagem essenciais para iniciantes.
+
+    Não há necessidade de ter tantos pincéis, principalmente quem está começando agora e não faz nada muito elaborado. Alguns modelos são tão específicos, que apenas maquiadores usam, mas isso é assunto para outro dia… hoje vamos falar do básico.
+</p>
+<div class=" texto- center">
+    <h1>Pincéis de maquiagem essenciais para você ter na sua nécessaire</h1>
     <p>
-        Você que está começando a aprender sobre o “fantástico mundo da maquiagem”, chega até ficar perdida de tantos modelos de pincéis que existem? Respira e fica calma, a Curvex vai te ajudar nessa missão de encontrar pincéis de maquiagem essenciais para iniciantes.
+        <h1>Base</h1>
+        Muitas pessoas usam as mãos para aplicar a base. Não é um jeito errado de passar o produto, mas o efeito não fica tão legal. Isso porque o pincel ajuda a assentar melhor a maquiagem e fixar.
 
-        Não há necessidade de ter tantos pincéis, principalmente quem está começando agora e não faz nada muito elaborado. Alguns modelos são tão específicos, que apenas maquiadores usam, mas isso é assunto para outro dia… hoje vamos falar do básico.
+        Quando você usa as mãos, é bem provável que você transfira o suor dos dedos para o rosto e isso pode não ajudar na duração.
+
+        Se quiser saber mais sobra aplicação de base, confere o nosso guia completo da base.
+
+        Quais modelos de pincéis posso usar para a base?
+
+        Você pode optar por um modelo mais achatado com a borda arredonda. Essa opção é ótima para aplicar em regiões como ao redor nariz e rente à raiz dos cabelos.
+
+        Vale também apostar no pincel oval grande, essa tendência não deixa o produto acumular tanto e dá firmeza na hora de se maquiar.
+
+        <h1>Pó</h1>
+        É bem comum vir no estojo do pó uma espojinha fina. Ela serve muito bem para aplicar, porém costuma deixar o rosto com um aspecto mais artificial, já que transfere muito produto.
+
+        Com o pincel você pode aplicar a quantidade que achar necessária e consegue passar o pincel apenas na Zona T.
+
+        Quais modelos de pincéis posso usar para o pó?
+
+        Basicamente qualquer modelo com bastante cerdas e fofo é o certo para aplicar o pó.  Alguns até servem para o blush também (já vamos falar disso).
+
+        <h1>Corretivo</h1>
+        O corretivo tem o mesmo dilema da base sobre aplicar com as mãos. Algumas pessoas também usam aquelas espojinhas, mas ela pode carregar demais o produto.
+
+        Quais modelos de pincéis posso usar para o corretivo?
+
+        Você pode usar algum pincel pequeno parecido com o da base ou investir no redondo. Esse último na versão pequena consegue aplicar em lugares específicos como o canto dos olhos ou laterais do nariz, sem espalhar produto para o restante do rosto.
+
+        <h1>Blush</h1>
+        De todos os produtos aqui citados, o blush é o que mais precisa de um pincel na hora de aplicar. Normalmente, o blush é em pó e não vem com nenhum tipo de espojinha. O pincel também ajuda a não deixar aquele efeito exagerado do blush, espalhando bem por toda a região da bochecha.
+
+        Quais modelos de pincéis posso usar para o blush?
+
+        Você pode usar o mesmo modelo de pincel de pó, porém em um tamanho menor.
+
+        <h1>Sombra</h1>
+        Por fim, a sombra dá para aplicar com os dedos, mas não pode alcançar o efeito que você espera. O pincel ajuda a deixar o pigmento melhor fixado.
+
+        Quais modelos de pincéis posso usar para a sombra?
+
+        Existem variações de pinceis para a sombra, mas para quem está começando é melhor apostar no modelo arredondado e achatado. Ele ajuda a aplicar a sombra com precisão e pode até ser usado para aplicar iluminador também.
     </p>
-    <div class=" texto- center">
-        <h1>Pincéis de maquiagem essenciais para você ter na sua nécessaire</h1>
-        <p>
-            <h1>Base</h1>
-            Muitas pessoas usam as mãos para aplicar a base. Não é um jeito errado de passar o produto, mas o efeito não fica tão legal. Isso porque o pincel ajuda a assentar melhor a maquiagem e fixar.
+    <style>
+        body {
+            background-color: pink;
+        }
+    </style>
+</div>
+<div class="col-md-6">
+    <form asp-action="Create">
+        <div class=" form-group">
+            <label class="control-label">Nome</label>
+            <input asp-for="Nome" class="form-control">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Comentário</label>
+            <textarea asp-for="Descricao" class="form-control"></textarea>
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+        <input type="submit" asp-action="Create" class="btn btn-primary" />
+    </form>
+</div>
 
-            Quando você usa as mãos, é bem provável que você transfira o suor dos dedos para o rosto e isso pode não ajudar na duração.
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
-            Se quiser saber mais sobra aplicação de base, confere o nosso guia completo da base.
 
-            Quais modelos de pincéis posso usar para a base?
 
-            Você pode optar por um modelo mais achatado com a borda arredonda. Essa opção é ótima para aplicar em regiões como ao redor nariz e rente à raiz dos cabelos.
 
-            Vale também apostar no pincel oval grande, essa tendência não deixa o produto acumular tanto e dá firmeza na hora de se maquiar.
 
-            <h1>Pó</h1>
-            É bem comum vir no estojo do pó uma espojinha fina. Ela serve muito bem para aplicar, porém costuma deixar o rosto com um aspecto mais artificial, já que transfere muito produto.
-
-            Com o pincel você pode aplicar a quantidade que achar necessária e consegue passar o pincel apenas na Zona T.
-
-            Quais modelos de pincéis posso usar para o pó?
-
-            Basicamente qualquer modelo com bastante cerdas e fofo é o certo para aplicar o pó.  Alguns até servem para o blush também (já vamos falar disso).
-
-            <h1>Corretivo</h1>
-            O corretivo tem o mesmo dilema da base sobre aplicar com as mãos. Algumas pessoas também usam aquelas espojinhas, mas ela pode carregar demais o produto.
-
-            Quais modelos de pincéis posso usar para o corretivo?
-
-            Você pode usar algum pincel pequeno parecido com o da base ou investir no redondo. Esse último na versão pequena consegue aplicar em lugares específicos como o canto dos olhos ou laterais do nariz, sem espalhar produto para o restante do rosto.
-
-            <h1>Blush</h1>
-            De todos os produtos aqui citados, o blush é o que mais precisa de um pincel na hora de aplicar. Normalmente, o blush é em pó e não vem com nenhum tipo de espojinha. O pincel também ajuda a não deixar aquele efeito exagerado do blush, espalhando bem por toda a região da bochecha.
-
-            Quais modelos de pincéis posso usar para o blush?
-
-            Você pode usar o mesmo modelo de pincel de pó, porém em um tamanho menor.
-
-            <h1>Sombra</h1>
-            Por fim, a sombra dá para aplicar com os dedos, mas não pode alcançar o efeito que você espera. O pincel ajuda a deixar o pigmento melhor fixado.
-
-            Quais modelos de pincéis posso usar para a sombra?
-
-            Existem variações de pinceis para a sombra, mas para quem está começando é melhor apostar no modelo arredondado e achatado. Ele ajuda a aplicar a sombra com precisão e pode até ser usado para aplicar iluminador também.
-        </p>
-    </div>
 
 
 

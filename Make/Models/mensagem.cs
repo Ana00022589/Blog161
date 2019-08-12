@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 
 namespace Make.Models
 {
-    public class mensagem
+    public class Mensagem
     {
-        public int mensagemId { get; set; }
-        [ForeignKey("mensagemID")]
-
+        public int MensagemId { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
-        public DateTime data { get; set; }
-        public string Categoria { get; set; }
+        public DateTime Data { get; set; }
+
+        [ForeignKey("RimelId")]
+        public int RimelId { get; set; }
+        public virtual Rimel Rimel  { get; set; }
+
+        [ForeignKey("ComentarioId")]
+        public int ComentarioId { get; set; }
+        public virtual Comentario Comentarios { get; set; }
     }
 }

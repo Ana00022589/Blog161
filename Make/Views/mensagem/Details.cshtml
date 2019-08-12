@@ -1,4 +1,4 @@
-﻿@model Make.Models.mensagem
+﻿@model Make.Models.Mensagem
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>mensagem</h4>
+    <h4>Mensagem</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,20 +23,26 @@
             @Html.DisplayFor(model => model.Descricao)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.data)
+            @Html.DisplayNameFor(model => model.Data)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.data)
+            @Html.DisplayFor(model => model.Data)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
+            @Html.DisplayNameFor(model => model.Rimel)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria)
+            @Html.DisplayFor(model => model.Rimel.RimelId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comentarios)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comentarios.ComentarioId)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.mensagemId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.MensagemId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

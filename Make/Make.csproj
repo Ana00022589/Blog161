@@ -6,6 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Comentario\**" />
+    <Content Remove="Views\Comentario\**" />
+    <EmbeddedResource Remove="Views\Comentario\**" />
+    <None Remove="Views\Comentario\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Make.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Controllers\Make.cshtml" />
+    <Content Remove="wwwroot\img\images.png.jfif" />
     <Content Remove="wwwroot\img\paula.jfif" />
   </ItemGroup>
 

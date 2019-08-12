@@ -33,7 +33,7 @@ namespace Make.Controllers
             }
 
             var comentario = await _context.Comentario
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ComentarioId == id);
             if (comentario == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace Make.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Nome,Descricao,dataComentario,Artista")] Comentario comentario)
+        public async Task<IActionResult> Create([Bind("ComentarioId,Titulo,Descricao,DataComentario,Artista,Nome")] Comentario comentario)
         {
             if (ModelState.IsValid)
             {
@@ -85,9 +85,9 @@ namespace Make.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,Descricao,dataComentario,Artista")] Comentario comentario)
+        public async Task<IActionResult> Edit(int id, [Bind("ComentarioId,Titulo,Descricao,DataComentario,Artista,Nome")] Comentario comentario)
         {
-            if (id != comentario.ID)
+            if (id != comentario.ComentarioId)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace Make.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ComentarioExists(comentario.ID))
+                    if (!ComentarioExists(comentario.ComentarioId))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace Make.Controllers
             }
 
             var comentario = await _context.Comentario
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ComentarioId == id);
             if (comentario == null)
             {
                 return NotFound();
@@ -146,7 +146,7 @@ namespace Make.Controllers
 
         private bool ComentarioExists(int id)
         {
-            return _context.Comentario.Any(e => e.ID == id);
+            return _context.Comentario.Any(e => e.ComentarioId == id);
         }
     }
 }

@@ -8,13 +8,12 @@ namespace Make.Models
 {
     public class Comentario
     {
-        [key]
-        public int ID { get; set; }
-        [ForeignKey("mensagemID")]
-        public mensagem mensagem { get; set; }
-        public string Nome { get; set; }
+        public int ComentarioId { get; set; }
+        public string Titulo { get; set; }
         public string Descricao { get; set; }
-        public DateTime dataComentario { get; set; }
+        public DateTime DataComentario { get; set; }
         public string Artista { get; set; }
+        public string Nome { get; set; }
+        public List<Mensagem> Mensagem { get; set; }
     }
 }

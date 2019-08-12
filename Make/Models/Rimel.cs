@@ -7,7 +7,8 @@ namespace Make.Models
 {
     public class Rimel
     {
-        public int RimelID { get; set; }
+        public int RimelId { get; set; }
         public string Descricao { get; set; }
+        public List<Mensagem> Mensagens { get; set; }
     }
 }

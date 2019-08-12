@@ -14,7 +14,7 @@ namespace Make.Models
         {
         }
 
-        public DbSet<Make.Models.mensagem> mensagem { get; set; }
+        public DbSet<Make.Models.Mensagem> Mensagem { get; set; }
 
         public DbSet<Make.Models.Comentario> Comentario { get; set; }
 
