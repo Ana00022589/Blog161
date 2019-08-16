@@ -1,0 +1,43 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../img/ana.png');
+    background-size : cover;
+    font-family :"", sans-serif;
+}
+.login{
+    width:320px;
+    height: 420px;
+    border: 2px solid#000;
+    border-radius :80px 0px 80px;
+    color : #fff;
+   Background-color : powderblue;
+   top:50%;
+   left:50%;
+   position:absolute;
+   transform:translate(-50%,-50%); 
+   box-sizing: border-box;
+   padding : 68px 28px;
+}
+.usuario {
+    border-radius:inherit 3px 4px;
+    position : absolute;
+    top :-50%;
+    left :112px;
+}
+h1 {
+    margin :0;
+    padding-top:0;
+    padding-left:0;
+    padding-bottom:20px;
+    letter-spacing :10px;
+    text-transform:uppercase;
+    text-align:center;
+    font-size:20px;
+}
+login a{
+    margin:0;
+    padding:0;
+    font-weight:bold;
+}
+

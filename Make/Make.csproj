@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Make.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Controllers\Make.cshtml" />
+    <Content Remove="wwwroot\img\images.png.jfif" />
+    <Content Remove="wwwroot\img\paula.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Comentario\Create.cshtml" />
+    <None Include="Views\Comentario\Delete.cshtml" />
+    <None Include="Views\Comentario\Details.cshtml" />
+    <None Include="Views\Comentario\Edit.cshtml" />
+    <None Include="Views\Comentario\Index.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

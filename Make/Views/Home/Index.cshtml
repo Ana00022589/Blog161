@@ -1,0 +1,35 @@
+﻿@model Make.Models.Comentario
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+    <div class=" login">
+        <img src="~/img/ana.png" class="usuario" width="100" height="100" alt="" />
+        <h1>Login</h1>
+        <form>
+            <p>Usuario:</p>
+            <input type="text" name=" " placeholder="insira o usuario" />
+
+            <p>Senha</p>
+            <input type="password" name=" " value="insira senha" />
+            <input type="submit" name="" value="login" />
+            <a href="#">Esqueceu a senha ?</a>
+            <a href="#">Ainda Possui conta?</a>
+        </form>
+    </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
+
+
+
+
+
