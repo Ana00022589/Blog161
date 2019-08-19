@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Make.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Make
 {
@@ -24,28 +27,54 @@ namespace Make
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    services.Configure<CookiePolicyOptions>(options =>
+        //    {
+        //        // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+        //        options.CheckConsentNeeded = context => true;
+        //        options.MinimumSameSitePolicy = SameSiteMode.None;
+        //    });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        //    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<MakeContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MakeContext")));
-        }
+        //    services.AddDbContext<MakeContext>(options =>
+        //            options.UseSqlServer(Configuration.GetConnectionString("MakeContext")));
+        //}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 7;
+                options.Password.RequireUppercase = true;
+
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<MakeContext>();
+
+            services.AddDbContext<MakeContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MakeContext")));
+
+                        services.AddMvc();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireEmail", policy => policy.RequireClaim(ClaimTypes.Email));
+            });
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseAuthentication();
+
             }
             else
             {

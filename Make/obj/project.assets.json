@@ -12951,11 +12951,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Fabrica\\source\\repos\\Make\\Make\\Make.csproj",
+      "projectUniqueName": "C:\\Users\\Fabrica\\Desktop\\Nova pasta\\Blog161\\Make\\Make.csproj",
       "projectName": "Make",
-      "projectPath": "C:\\Users\\Fabrica\\source\\repos\\Make\\Make\\Make.csproj",
+      "projectPath": "C:\\Users\\Fabrica\\Desktop\\Nova pasta\\Blog161\\Make\\Make.csproj",
       "packagesPath": "C:\\Users\\Fabrica\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Fabrica\\source\\repos\\Make\\Make\\obj\\",
+      "outputPath": "C:\\Users\\Fabrica\\Desktop\\Nova pasta\\Blog161\\Make\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
