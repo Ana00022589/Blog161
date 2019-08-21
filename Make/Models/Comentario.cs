@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace Make.Models
         public DateTime DataComentario { get; set; }
         public string Artista { get; set; }
         public string Nome { get; set; }
-        public List<Mensagem> Mensagem { get; set; }
+
+        public int MensagemId { get; set; }
+        [DisplayName("Mensagem")]
+        [ForeignKey("MensagemId")]
+        public Mensagem mensagens { get; set; }
     }
 }

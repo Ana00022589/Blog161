@@ -6,26 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Make.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Make.Controllers
 {
+    [Authorize(Policy = "RequireEmail")]
     public class MensagemController : Controller
     {
         private readonly MakeContext _context;
+        private IHostingEnvironment _environment;
 
-        public MensagemController(MakeContext context)
+        public MensagemController(MakeContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: Mensagem
         public async Task<IActionResult> Index()
         {
-            var makeContext = _context.Mensagem.Include(m => m.Comentarios).Include(m => m.Rimel);
+            var makeContext = _context.Mensagem
+                .Include(m => m.Comentarios)
+                .Include(m => m.Rimel);
             return View(await makeContext.ToListAsync());
         }
 
         // GET: Mensagem/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,7 +42,6 @@ namespace Make.Controllers
             }
 
             var mensagem = await _context.Mensagem
-                .Include(m => m.Comentarios)
                 .Include(m => m.Rimel)
                 .FirstOrDefaultAsync(m => m.MensagemId == id);
             if (mensagem == null)
@@ -48,17 +55,17 @@ namespace Make.Controllers
         // GET: Mensagem/Create
         public IActionResult Create()
         {
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId");
-            ViewData["RimelId"] = new SelectList(_context.Rimel, "RimelId", "RimelId");
+            ViewData["RimelId"] = new SelectList(_context.Rimel, "RimelId", "Descricao");
             return View();
         }
 
         // POST: Mensagem/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MensagemId,Titulo,Descricao,Data,RimelId,ComentarioId")] Mensagem mensagem)
+        public async Task<IActionResult> Create([Bind("MensagemId,Titulo,Descricao,Data,RimelId")] Mensagem mensagem)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +73,6 @@ namespace Make.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId", mensagem.ComentarioId);
             ViewData["RimelId"] = new SelectList(_context.Rimel, "RimelId", "RimelId", mensagem.RimelId);
             return View(mensagem);
         }
@@ -84,7 +90,6 @@ namespace Make.Controllers
             {
                 return NotFound();
             }
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId", mensagem.ComentarioId);
             ViewData["RimelId"] = new SelectList(_context.Rimel, "RimelId", "RimelId", mensagem.RimelId);
             return View(mensagem);
         }
@@ -92,9 +97,10 @@ namespace Make.Controllers
         // POST: Mensagem/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MensagemId,Titulo,Descricao,Data,RimelId,ComentarioId")] Mensagem mensagem)
+        public async Task<IActionResult> Edit(int id, [Bind("MensagemId,Titulo,Descricao,Data,RimelId")] Mensagem mensagem)
         {
             if (id != mensagem.MensagemId)
             {
@@ -121,12 +127,12 @@ namespace Make.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "ComentarioId", "ComentarioId", mensagem.ComentarioId);
             ViewData["RimelId"] = new SelectList(_context.Rimel, "RimelId", "RimelId", mensagem.RimelId);
             return View(mensagem);
         }
 
         // GET: Mensagem/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,7 +141,6 @@ namespace Make.Controllers
             }
 
             var mensagem = await _context.Mensagem
-                .Include(m => m.Comentarios)
                 .Include(m => m.Rimel)
                 .FirstOrDefaultAsync(m => m.MensagemId == id);
             if (mensagem == null)
@@ -147,6 +152,7 @@ namespace Make.Controllers
         }
 
         // POST: Mensagem/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

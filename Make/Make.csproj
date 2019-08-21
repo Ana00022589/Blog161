@@ -11,16 +11,7 @@
 
   <ItemGroup>
     <Content Remove="Controllers\Make.cshtml" />
-    <Content Remove="wwwroot\img\images.png.jfif" />
     <Content Remove="wwwroot\img\paula.jfif" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Comentario\Create.cshtml" />
-    <None Include="Views\Comentario\Delete.cshtml" />
-    <None Include="Views\Comentario\Details.cshtml" />
-    <None Include="Views\Comentario\Edit.cshtml" />
-    <None Include="Views\Comentario\Index.cshtml" />
   </ItemGroup>
 
 

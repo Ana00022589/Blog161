@@ -31,11 +31,15 @@ namespace Make.Migrations
 
                     b.Property<string>("Descricao");
 
+                    b.Property<int>("MensagemId");
+
                     b.Property<string>("Nome");
 
                     b.Property<string>("Titulo");
 
                     b.HasKey("ComentarioId");
+
+                    b.HasIndex("MensagemId");
 
                     b.ToTable("Comentario");
                 });
@@ -45,8 +49,6 @@ namespace Make.Migrations
                     b.Property<int>("MensagemId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ComentarioId");
 
                     b.Property<DateTime>("Data");
 
@@ -59,8 +61,6 @@ namespace Make.Migrations
                     b.Property<string>("UserId");
 
                     b.HasKey("MensagemId");
-
-                    b.HasIndex("ComentarioId");
 
                     b.HasIndex("RimelId");
 
@@ -249,13 +249,16 @@ namespace Make.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Make.Models.Comentario", b =>
+                {
+                    b.HasOne("Make.Models.Mensagem", "mensagens")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("MensagemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Make.Models.Mensagem", b =>
                 {
-                    b.HasOne("Make.Models.Comentario", "Comentarios")
-                        .WithMany("Mensagem")
-                        .HasForeignKey("ComentarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Make.Models.Rimel", "Rimel")
                         .WithMany("Mensagens")
                         .HasForeignKey("RimelId")

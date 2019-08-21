@@ -6,54 +6,81 @@
 
 <h1>Index</h1>
 
+@*<style>
+        body {
+            background-color: pink;
+        }
+    </style>
+    <div class="text-center">
+        <h1 class="display-4">Brilhando na Make</h1>
+        <p>Olha oque eu preparei pra vocÊ s2  ..<a href="https://www.pausaparafeminices.com/tag/make/">Pausa para sua feminice </a>.</p>
+    </div>
+    <img src="~/img/ana.png" class="rounded mx-auto d-block" alt="~/img/ana.png">
+    <p>
+        <a asp-action="Create">Criar Post</a>
+    </p>
+    <div class="container text-center">
+        @foreach (var item in Model)
+        {
+
+            <h1>@item.Titulo</h1>
+            <p>
+                @item.Descricao
+            </p>
+            <tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MensagemId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.MensagemId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MensagemId">Delete</a>
+                </td>
+            </tr>
+        }
+    </div>*@
+<style>
+    body {
+        background-color: pink;
+    }
+</style>
+<div class="text-center">
+    <h1 class="display-4">Brilhando na Make</h1>
+    <p>Olha oque eu preparei pra vocÊ s2  ..<a href="https://www.pausaparafeminices.com/tag/make/">Pausa para sua feminice </a>.</p>
+</div>
+<img src="~/img/ana.png" class="rounded mx-auto d-block" alt="~/img/ana.png">
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar Post</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Titulo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rimel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentarios)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rimel.RimelId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentarios.ComentarioId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MensagemId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MensagemId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MensagemId">Delete</a>
-            </td>
-        </tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <h1>@Html.DisplayFor(modelItem => item.Titulo)</h1>
+        </td>
+        <td>
+            <div class="card-body">
+                <h5>Descrição:</h5><p> "@Html.DisplayFor(modelItem => item.Descricao)"</p>
+                <h5 class="card-title">Comentários</h5>
+                <div class="row">
+                    @foreach (var comentario in item.Comentarios)
+                    {
+                        @if (comentario.MensagemId == item.MensagemId)
+                        {
+                            <div class="col-sm-6">
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@comentario.Titulo</h5>
+                                        <p class="card-text">@comentario.Descricao</p>
+                                        <span class="blockquote-footer float-left"><h6>Autor:  @comentario.Artista - @comentario.DataComentario</h6></span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <a asp-action="Create" asp-route-id="@item.MensagemId" asp-controller="Comentario" class="btn btn-success float-right">Comentar</a>
+                <a asp-action="Edit" asp-controller="Mensagem" asp-route-id="@item.MensagemId" class="btn btn-primary float-right">Edit</a>
+                <a asp-action="Delete" asp-controller="Mensagem" asp-route-id="@item.MensagemId" class="btn btn-danger float-right">Delete</a>
+            </div>
+        </td>
+
+    </tr>
 }
-    </tbody>
-</table>

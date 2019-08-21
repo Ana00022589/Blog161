@@ -13,12 +13,13 @@ namespace Make.Models
         public string Descricao { get; set; }
         public DateTime Data { get; set; }
 
-        [ForeignKey("RimelId")]
+
         public int RimelId { get; set; }
+        [ForeignKey("RimelId")]
         public virtual Rimel Rimel  { get; set; }
 
-        [ForeignKey("ComentarioId")]
-        public int ComentarioId { get; set; }
-        public virtual Comentario Comentarios { get; set; }
+ 
+        public ICollection<Comentario> Comentarios { get; set; }
+
     }
 }

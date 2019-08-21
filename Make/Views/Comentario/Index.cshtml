@@ -3,49 +3,63 @@
 @{
     ViewData["Title"] = "Index";
 }
-@*<div class="area-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb center-black">
-            <div class="bread-level-1" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="//www.denimzero.com.br/blog" itemprop="url">
-                    <span itemprop="title">Blog</span>
-                </a>
-                <span class="separator-right"></span>
-            </div>
-            <div class="bread-level-2" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="//www.denimzero.com.br/blog/dicas" itemprop="url">
-                    <span itemprop="title">Dicas</span>
-                </a>
-                <span class="separator-right"></span>
-            </div>
-            <span>Dicas de make e hair para o Lollapalooza 2019</span>
-        </div>
 
-    </div>*@
-</div>
-<style>
-    body {
-        background-color: pink;
-    }
-</style>
-<div class="text-center">
-    <h1 class="display-4">Brilhando na Make</h1>
-    <p>Olha oque eu preparei pra vocÊ s2  ..<a href="https://www.pausaparafeminices.com/tag/make/">Pausa para sua feminice </a>.</p>
-</div>
-<img src="~/img/ana.png" class="rounded mx-auto d-block" alt="~/img/ana.png">
-<div class="container text-center">
-    @foreach (var item in Model)
-    {
-        <a asp-action="Edit" asp-route-id="@item.ComentarioId">Edit</a>
-        <a asp-action="Details" asp-route-id="@item.ComentarioId">Details</a>
-        <a asp-action="Delete" asp-route-id="@item.ComentarioId">Delete</a>
-        <h1>@item.Titulo</h1>
-        <p>
-            @item.Descricao
-        </p>
-    }
-</div>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Novo Comentario</a>
+    <a asp-action="Create">Create New</a>
 </p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataComentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artista)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mensagens)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataComentario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artista)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mensagens.MensagemId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ComentarioId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ComentarioId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ComentarioId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

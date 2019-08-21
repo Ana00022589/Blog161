@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Make.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Make.Controllers
 {
+    [Authorize(Policy = "RequireEmail")]
+    [Authorize(Roles = "Administrator")]
     public class RimelController : Controller
     {
         private readonly MakeContext _context;

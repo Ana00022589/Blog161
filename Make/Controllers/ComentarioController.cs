@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace Make.Controllers
 {
     [Authorize(Policy = "RequireEmail")]
-    [Authorize(Roles = "Administrator")]
     public class ComentarioController : Controller
     {
         private readonly MakeContext _context;
@@ -24,10 +23,12 @@ namespace Make.Controllers
         // GET: Comentario
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Comentario.ToListAsync());
+            var makeContext = _context.Comentario.Include(c => c.mensagens);
+            return View(await makeContext.ToListAsync());
         }
 
         // GET: Comentario/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,6 +37,7 @@ namespace Make.Controllers
             }
 
             var comentario = await _context.Comentario
+                .Include(c => c.mensagens)
                 .FirstOrDefaultAsync(m => m.ComentarioId == id);
             if (comentario == null)
             {
@@ -46,28 +48,34 @@ namespace Make.Controllers
         }
 
         // GET: Comentario/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "Titulo", id);
             return View();
         }
 
         // POST: Comentario/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ComentarioId,Titulo,Descricao,DataComentario,Artista,Nome")] Comentario comentario)
+        public async Task<IActionResult> Create(int id,[Bind("ComentarioId,Titulo,Descricao,DataComentario,Artista,Nome,MensagemId")] Comentario comentario)
         {
             if (ModelState.IsValid)
             {
+                comentario.Artista = User.Identity.Name;
+                comentario.MensagemId = id;
                 _context.Add(comentario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId", comentario.MensagemId);
             return View(comentario);
         }
 
         // GET: Comentario/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,15 +88,17 @@ namespace Make.Controllers
             {
                 return NotFound();
             }
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId", comentario.MensagemId);
             return View(comentario);
         }
 
         // POST: Comentario/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ComentarioId,Titulo,Descricao,DataComentario,Artista,Nome")] Comentario comentario)
+        public async Task<IActionResult> Edit(int id, [Bind("ComentarioId,Titulo,Descricao,DataComentario,Artista,Nome,MensagemId")] Comentario comentario)
         {
             if (id != comentario.ComentarioId)
             {
@@ -115,10 +125,12 @@ namespace Make.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId", comentario.MensagemId);
             return View(comentario);
         }
 
         // GET: Comentario/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,6 +139,7 @@ namespace Make.Controllers
             }
 
             var comentario = await _context.Comentario
+                .Include(c => c.mensagens)
                 .FirstOrDefaultAsync(m => m.ComentarioId == id);
             if (comentario == null)
             {
@@ -137,6 +150,7 @@ namespace Make.Controllers
         }
 
         // POST: Comentario/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

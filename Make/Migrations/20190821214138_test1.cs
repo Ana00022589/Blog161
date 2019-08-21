@@ -4,15 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Make.Migrations
 {
-    public partial class tste2 : Migration
+    public partial class test1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "UserId",
-                table: "Mensagem",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -53,6 +48,19 @@ namespace Make.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rimel",
+                columns: table => new
+                {
+                    RimelId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Descricao = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rimel", x => x.RimelId);
                 });
 
             migrationBuilder.CreateTable(
@@ -161,10 +169,58 @@ namespace Make.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Mensagem_UserId",
-                table: "Mensagem",
-                column: "UserId");
+            migrationBuilder.CreateTable(
+                name: "Mensagem",
+                columns: table => new
+                {
+                    MensagemId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: true),
+                    Descricao = table.Column<string>(nullable: true),
+                    Data = table.Column<DateTime>(nullable: false),
+                    RimelId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mensagem", x => x.MensagemId);
+                    table.ForeignKey(
+                        name: "FK_Mensagem_Rimel_RimelId",
+                        column: x => x.RimelId,
+                        principalTable: "Rimel",
+                        principalColumn: "RimelId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Mensagem_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comentario",
+                columns: table => new
+                {
+                    ComentarioId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: true),
+                    Descricao = table.Column<string>(nullable: true),
+                    DataComentario = table.Column<DateTime>(nullable: false),
+                    Artista = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(nullable: true),
+                    MensagemId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comentario", x => x.ComentarioId);
+                    table.ForeignKey(
+                        name: "FK_Comentario_Mensagem_MensagemId",
+                        column: x => x.MensagemId,
+                        principalTable: "Mensagem",
+                        principalColumn: "MensagemId",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -205,21 +261,24 @@ namespace Make.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Mensagem_AspNetUsers_UserId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentario_MensagemId",
+                table: "Comentario",
+                column: "MensagemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mensagem_RimelId",
                 table: "Mensagem",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                column: "RimelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mensagem_UserId",
+                table: "Mensagem",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Mensagem_AspNetUsers_UserId",
-                table: "Mensagem");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -236,18 +295,19 @@ namespace Make.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comentario");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Mensagem");
+
+            migrationBuilder.DropTable(
+                name: "Rimel");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Mensagem_UserId",
-                table: "Mensagem");
-
-            migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "Mensagem");
         }
     }
 }
